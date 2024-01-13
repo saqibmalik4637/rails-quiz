@@ -1,0 +1,5 @@
+json.(
+  quiz,
+  :id,
+  :name
+)
