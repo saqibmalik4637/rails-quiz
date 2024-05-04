@@ -1,5 +1,13 @@
 json.(
   quiz,
   :id,
-  :name
+  :name,
+  :description,
+  :image,
+  :questions_count,
+  :tags_json,
+  :tags_string,
+  :played_count,
+  :favorited_count,
+  :shared_count
 )

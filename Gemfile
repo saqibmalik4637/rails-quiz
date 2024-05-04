@@ -71,3 +71,6 @@ group :test do
   gem "selenium-webdriver"
 
 end
+
+gem 'ransack'
+gem 'jwt'

@@ -2,5 +2,6 @@ json.(
   category,
   :id,
   :name,
-  :image
+  :image,
+  :quizzes_count
 )

@@ -10,9 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_17_085048) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_04_173934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "carousel_items", force: :cascade do |t|
+    t.string "collectable_type"
+    t.bigint "collectable_id"
+    t.bigint "carousel_id"
+    t.boolean "show_on_homepage", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carousel_id"], name: "index_carousel_items_on_carousel_id"
+    t.index ["collectable_type", "collectable_id"], name: "index_carousel_items_on_collectable"
+  end
+
+  create_table "carousels", force: :cascade do |t|
+    t.string "type"
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -67,6 +86,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_17_085048) do
     t.integer "questions_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.bigint "played_count", default: 0
+    t.bigint "favorited_count", default: 0
+    t.bigint "shared_count", default: 0
     t.index ["category_id"], name: "index_quizzes_on_category_id"
   end
 
@@ -85,6 +108,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_17_085048) do
     t.integer "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
+    t.string "country_code"
   end
 
 end
