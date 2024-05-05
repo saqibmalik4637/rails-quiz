@@ -1,4 +1,5 @@
 class Api::V1::QuizzesController < Api::V1::BaseController
+  skip_before_action :authenticate_user
   def index
     if params[:category_id].present?
       @category = Category.find(params[:category_id])
