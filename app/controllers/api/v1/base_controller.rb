@@ -4,6 +4,8 @@ class Api::V1::BaseController < ApplicationController
   before_action :authenticate_user
   protect_from_forgery with: :null_session
 
+  helper_method :current_user
+
   def authenticate_user
     token = request.headers[:token]
     if token.present?
@@ -18,5 +20,9 @@ class Api::V1::BaseController < ApplicationController
       render json: {}, status: 401
       return
     end
+  end
+
+  def current_user
+    @current_user
   end
 end

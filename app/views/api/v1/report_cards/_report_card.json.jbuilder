@@ -1,0 +1,10 @@
+json.(
+  report_card,
+  :id,
+  :correct_count,
+  :incorrect_count,
+  :no_result_count,
+  :score,
+  :quiz_total_points,
+  :given_answers
+)

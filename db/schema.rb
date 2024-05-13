@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_04_173934) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_12_063029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,13 +90,39 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_04_173934) do
     t.bigint "played_count", default: 0
     t.bigint "favorited_count", default: 0
     t.bigint "shared_count", default: 0
+    t.integer "total_points", default: 1000
     t.index ["category_id"], name: "index_quizzes_on_category_id"
+  end
+
+  create_table "report_cards", force: :cascade do |t|
+    t.bigint "quiz_id"
+    t.bigint "user_id"
+    t.integer "correct_count"
+    t.integer "incorrect_count"
+    t.integer "no_result_count"
+    t.jsonb "given_answers", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "score"
+    t.index ["quiz_id"], name: "index_report_cards_on_quiz_id"
+    t.index ["user_id"], name: "index_report_cards_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_quizzes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "quiz_id"
+    t.boolean "is_played", default: false
+    t.boolean "is_favorited", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_user_quizzes_on_quiz_id"
+    t.index ["user_id"], name: "index_user_quizzes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

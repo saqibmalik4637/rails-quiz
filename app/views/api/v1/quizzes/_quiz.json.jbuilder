@@ -4,6 +4,7 @@ json.(
   :name,
   :description,
   :image,
+  :total_points,
   :questions_count,
   :tags_json,
   :tags_string,
@@ -11,3 +12,5 @@ json.(
   :favorited_count,
   :shared_count
 )
+
+json.is_favorited current_user.favorited_quizzes.include?(quiz)

@@ -12,9 +12,17 @@ Rails.application.routes.draw do
 
       resources :quizzes, only: [:index] do
         resources :questions, only: [:index]
+
+        member do
+          post :mark_favorited
+          post :unmark_favorited
+          post :mark_played
+        end
       end
 
       resources :carousels, only: [:index]
+
+      resources :report_cards, only: [:create, :show]
 
       get '/search/suggestions/:query', to: 'search#suggestions', as: :suggestions
     end

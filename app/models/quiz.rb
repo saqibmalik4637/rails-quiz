@@ -7,6 +7,11 @@ class Quiz < ApplicationRecord
   has_many :questions, dependent: :nullify
   has_many :carousel_items, as: :collectable, dependent: :destroy
   has_many :carousels, through: :carousel_items
+  has_many :user_quizzes
+  has_many :user_favorites, -> { where is_favorited: true }, class_name: 'UserQuiz', foreign_key: :quiz_id
+  has_many :favorited_users, through: :user_favorites, class_name: 'User', source: :user
+  has_many :user_plays, -> { where is_played: true }, class_name: 'UserQuiz', foreign_key: :quiz_id
+  has_many :played_users, through: :user_plays, class_name: 'User', source: :user
 
   # CLASS METHODS
   def self.search(query)
