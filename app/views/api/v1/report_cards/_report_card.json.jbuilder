@@ -6,5 +6,6 @@ json.(
   :no_result_count,
   :score,
   :quiz_total_points,
-  :given_answers
+  :given_answers,
+  :quiz_category_name
 )

@@ -17,4 +17,8 @@ class ReportCard < ApplicationRecord
   def quiz_total_points
     quiz.total_points
   end
+
+  def quiz_category_name
+    quiz.category.name
+  end
 end

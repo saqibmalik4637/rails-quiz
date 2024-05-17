@@ -1,5 +1,7 @@
 class CarouselService
   def self.create_category_carousels
+    CategoryCarousel.create(title: 'Trending Categories', description: 'Collection of trending categories')
+
     category_ids = Category.all.pluck(:id)
     used_category_ids = []
 
@@ -19,6 +21,8 @@ class CarouselService
   end
 
   def self.create_quiz_carousels
+    QuizCarousel.create(title: 'Trending Quizzes', description: 'Collection of trending quizzes')
+
     quiz_ids = Quiz.all.pluck(:id)
     used_quiz_ids = []
 
