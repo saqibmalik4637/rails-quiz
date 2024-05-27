@@ -4,6 +4,9 @@ class Category < ApplicationRecord
   has_many :carousel_items, as: :collectable, dependent: :destroy
   has_many :carousels, through: :carousel_items
 
+  # Attachments
+  has_one_attached :image
+
   # CLASS METHODS
   def self.search(query)
     result = if query.present?
@@ -20,8 +23,8 @@ class Category < ApplicationRecord
   end
 
   # INSTANCE METHODS
-  def image
-    { uri: "https://media.istockphoto.com/id/1268465415/photo/quiz-time-concept-speech-bubble-with-pencil-on-yellow-background.jpg?s=612x612&w=0&k=20&c=ZowfYpCJeyknpWhnfyWqV1_If6aJmFUiSqqqEUBhvAg=" }
+  def image_url
+    image.url
   end
 
   def quizzes_count

@@ -36,10 +36,11 @@ class Quiz < ApplicationRecord
   # INSTANCE METHODS
   def image
     { uri: [
-      'https://blogassets.leverageedu.com/blog/wp-content/uploads/2020/04/11212007/Science-Quiz.png',
-      'https://www.investintech.com/resources/blog/wp-content/uploads/2021/09/Tech-Quiz-Test-Your-Knowledge-While-Having-Fun.jpg',
-      'https://images.ctfassets.net/rvt0uslu5yqp/16pqkuQR5uENApyl2OGJ1N/ceae8315e2288e7943de17f50c8a18c6/Blog_Quiz_Cover-03.png'
+      "https://eb5a-2401-4900-1f38-3e3-3de0-e6e-2bba-127f.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel')}",
+      "https://eb5a-2401-4900-1f38-3e3-3de0-e6e-2bba-127f.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/time-travel-movie')}"
     ].sample }
+
+    # { uri: "https://eb5a-2401-4900-1f38-3e3-3de0-e6e-2bba-127f.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel')}" }
   end
 
   def questions_count

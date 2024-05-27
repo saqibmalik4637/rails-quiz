@@ -6,6 +6,10 @@ class Api::V1::BaseController < ApplicationController
 
   helper_method :current_user
 
+  before_action do
+    ActiveStorage::Current.url_options = { protocol: request.protocol, host: request.host, port: request.port }
+  end
+
   def authenticate_user
     token = request.headers[:token]
     if token.present?
