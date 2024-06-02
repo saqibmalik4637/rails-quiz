@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   root to: 'home#index'
+
   namespace :api do
     namespace :v1 do
       get '/me', to: 'users#me'
@@ -23,6 +26,14 @@ Rails.application.routes.draw do
       resources :carousels, only: [:index]
 
       resources :report_cards, only: [:create, :show]
+
+      resources :rooms, only: [:create, :show] do
+        member do
+          post :leave
+        end
+      end
+
+      post '/rooms/:joining_code/join', to: 'rooms#join', as: :join
 
       get '/search/suggestions/:query', to: 'search#suggestions', as: :suggestions
     end

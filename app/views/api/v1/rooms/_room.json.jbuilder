@@ -1,0 +1,11 @@
+json.(
+	room,
+	:id,
+	:user_id,
+	:quiz_id,
+	:quiz_image,
+	:quiz_name,
+	:joining_code,
+	:status,
+	:users
+)

@@ -3,7 +3,7 @@ json.(
   :id,
   :name,
   :description,
-  :image,
+  :image_url,
   :total_points,
   :questions_count,
   :tags_json,

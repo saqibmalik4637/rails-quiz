@@ -79,3 +79,6 @@ gem 'jwt'
 gem 'concurrent-ruby'
 gem 'faraday'
 gem 'faraday_curl'
+
+gem 'rack-cors', require: 'rack/cors'
+gem 'httparty'

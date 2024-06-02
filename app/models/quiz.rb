@@ -12,6 +12,9 @@ class Quiz < ApplicationRecord
   has_many :favorited_users, through: :user_favorites, class_name: 'User', source: :user
   has_many :user_plays, -> { where is_played: true }, class_name: 'UserQuiz', foreign_key: :quiz_id
   has_many :played_users, through: :user_plays, class_name: 'User', source: :user
+  has_many :rooms
+
+  has_one_attached :image
 
   # CLASS METHODS
   def self.search(query)
@@ -34,13 +37,15 @@ class Quiz < ApplicationRecord
   end
 
   # INSTANCE METHODS
-  def image
-    { uri: [
-      "https://eb5a-2401-4900-1f38-3e3-3de0-e6e-2bba-127f.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel')}",
-      "https://eb5a-2401-4900-1f38-3e3-3de0-e6e-2bba-127f.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/time-travel-movie')}"
-    ].sample }
-
-    # { uri: "https://eb5a-2401-4900-1f38-3e3-3de0-e6e-2bba-127f.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel')}" }
+  def image_url
+    if image.attached?
+      image.url
+    else
+      [
+        "https://0ae8-2401-4900-5d9e-733f-14b6-8a67-20c7-5d8c.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel')}",
+        "https://0ae8-2401-4900-5d9e-733f-14b6-8a67-20c7-5d8c.ngrok-free.app#{ActionController::Base.helpers.asset_path('quizzes/time-travel-legends')}"
+      ].sample
+    end
   end
 
   def questions_count
