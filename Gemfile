@@ -82,3 +82,10 @@ gem 'faraday_curl'
 
 gem 'rack-cors', require: 'rack/cors'
 gem 'httparty'
+
+gem 'capistrano', '~> 3.16'
+gem 'capistrano-rails', '~> 1.6'
+gem 'capistrano-rbenv', '~> 2.2'
+gem 'capistrano-bundler', '~> 2.0'
+gem 'capistrano3-puma', '~> 5.0'
+gem 'capistrano-passenger'
