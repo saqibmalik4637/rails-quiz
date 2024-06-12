@@ -6,3 +6,12 @@ development:
   username: postgres
   password: postgres
   host: localhost
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: quiz_dot_ai
+  username: root
+  password: root
+  host: localhost
