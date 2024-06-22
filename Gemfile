@@ -64,6 +64,10 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'capistrano', '~> 3.16'
+  gem 'capistrano-rails', '~> 1.6'
+  gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-rbenv', '~> 2.2'
 end
 
 group :test do
@@ -82,10 +86,3 @@ gem 'faraday_curl'
 
 gem 'rack-cors', require: 'rack/cors'
 gem 'httparty'
-
-gem 'capistrano', '~> 3.16'
-gem 'capistrano-rails', '~> 1.6'
-gem 'capistrano-rbenv', '~> 2.2'
-gem 'capistrano-bundler', '~> 2.0'
-gem 'capistrano3-puma', '~> 5.0'
-gem 'capistrano-passenger'
