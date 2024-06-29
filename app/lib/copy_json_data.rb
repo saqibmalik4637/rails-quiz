@@ -1,4 +1,4 @@
-class JsonData
+class CopyJsonData
   class << self
     def all
       json_data = {
