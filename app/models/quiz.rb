@@ -42,8 +42,8 @@ class Quiz < ApplicationRecord
       image.url
     else
       [
-        "https://quizwithai.in/#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel.png')}",
-        "https://quizwithai.in/#{ActionController::Base.helpers.asset_path('quizzes/time-travel-legends.png')}"
+        "https://quizwithai.in/#{ActionController::Base.helpers.url_for('quizzes/quiz-time-travel.png')}",
+        "https://quizwithai.in/#{ActionController::Base.helpers.url_for('quizzes/time-travel-legends.png')}"
       ].sample
     end
   end
