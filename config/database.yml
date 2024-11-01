@@ -3,8 +3,8 @@ development:
   encoding: unicode
   database: quiz_development
   pool: 5
-  username: postgres
-  password: postgres
+  username:
+  password:
   host: localhost
 
 production:
