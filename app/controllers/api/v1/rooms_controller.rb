@@ -1,6 +1,6 @@
 class Api::V1::RoomsController < Api::V1::BaseController
   def create
-    joining_code = rand(999999)
+    joining_code = rand(100000..999999)
     @room = current_user.created_rooms.create(quiz_id: params[:quiz_id], status: :is_open, joining_code: joining_code)
     @room.users << current_user
   end
@@ -15,7 +15,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
     room_user = @room.room_users.find_or_create_by(user_id: current_user.id)
     room_user.update(status: :active)
 
-    HTTParty.post('https://golden-vast-mongoose.ngrok-free.app', body: { user: current_user, room: @room }.to_json, headers: { 'Content-Type' => 'application/json' })
+    HTTParty.post('https://golden-vast-mongoose.ngrok-free.app/rooms/joined', body: { user: current_user, room: @room }.to_json, headers: { 'Content-Type' => 'application/json' })
   end
 
   def leave
