@@ -9,3 +9,7 @@ json.(
 	:status,
 	:users
 )
+
+json.quiz do
+	json.partial! 'api/v1/quizzes/quiz', quiz: room.quiz
+end
