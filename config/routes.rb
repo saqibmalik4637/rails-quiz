@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       resources :rooms, only: [:create, :show] do
         member do
           post :leave
+          get :scoreboard
         end
       end
 

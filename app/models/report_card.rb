@@ -1,6 +1,7 @@
 class ReportCard < ApplicationRecord
   belongs_to :user
   belongs_to :quiz
+  belongs_to :room, optional: true
 
   after_create :handle_given_answers_json
 

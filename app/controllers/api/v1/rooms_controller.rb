@@ -26,4 +26,11 @@ class Api::V1::RoomsController < Api::V1::BaseController
 
     render json: { success: true, message: 'You have successfully left this room' }
   end
+
+  def scoreboard
+    @room = Room.find(params[:id])
+
+    HTTParty.post('https://golden-vast-mongoose.ngrok-free.app/rooms/refresh_scoreboard', body: { user: current_user, room: @room, scoreboard: @room.scoreboard }.to_json, headers: { 'Content-Type' => 'application/json' })
+    render json: { scoreboard: @room.scoreboard }, status: :ok
+  end
 end

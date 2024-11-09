@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :followee_relationships, foreign_key: :follower_id, class_name: 'Follow', dependent: :destroy
   has_many :followees, through: :followee_relationships, source: :followee
 
+  has_many :report_cards, dependent: :destroy
+
   def jwt_token
     payload = { user_id: id }
     token = JWT.encode payload, nil, 'none'

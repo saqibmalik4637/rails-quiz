@@ -12,7 +12,8 @@ class Quiz < ApplicationRecord
   has_many :favorited_users, through: :user_favorites, class_name: 'User', source: :user
   has_many :user_plays, -> { where is_played: true }, class_name: 'UserQuiz', foreign_key: :quiz_id
   has_many :played_users, through: :user_plays, class_name: 'User', source: :user
-  has_many :rooms
+  has_many :rooms, dependent: :destroy
+  has_many :report_cards, dependent: :destroy
 
   has_one_attached :image
 

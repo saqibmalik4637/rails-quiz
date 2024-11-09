@@ -13,6 +13,7 @@ class Api::V1::ReportCardsController < Api::V1::BaseController
     params.require(:report_card).permit(
       :user_id,
       :quiz_id,
+      :room_id,
       given_answers: [
         :result,
         :points,
