@@ -9,7 +9,7 @@ module Openai
     end
   
     def auth
-      "Bearer #{ENV['OPEN_AI_API_KEY']}"
+      "Bearer sk-proj-anOtk68TzDJmaIoePzcQT3BlbkFJpIfciNNK3s8CqWaLxw9W"
     end
   end
 end
