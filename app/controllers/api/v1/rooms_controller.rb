@@ -15,7 +15,8 @@ class Api::V1::RoomsController < Api::V1::BaseController
     room_user = @room.room_users.find_or_create_by(user_id: current_user.id)
     room_user.update(status: :active)
 
-    HTTParty.post('https://golden-vast-mongoose.ngrok-free.app/rooms/joined', body: { user: current_user, room: @room }.to_json, headers: { 'Content-Type' => 'application/json' })
+    # ActionCable.server.broadcast("room_#{@room.id}", { event: 'new_user_joined', user: current_user.as_json })
+    # HTTParty.post('https://golden-vast-mongoose.ngrok-free.app/rooms/joined', body: { user: current_user, room: @room }.to_json, headers: { 'Content-Type' => 'application/json' })
   end
 
   def leave

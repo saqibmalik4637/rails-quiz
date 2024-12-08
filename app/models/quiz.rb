@@ -17,6 +17,8 @@ class Quiz < ApplicationRecord
 
   has_one_attached :image
 
+  scope :verified, -> { where(verified: true) }
+
   # CLASS METHODS
   def self.search(query)
     result = if query.present?
@@ -25,9 +27,9 @@ class Quiz < ApplicationRecord
       query_string += "OR #{match_string_query('quizzes.name', query)} "
       query_string += "OR #{match_string_query('tags.name', query)} "
       query_string += "OR #{match_string_query('carousels.title', query)}"
-      left_joins(:category, :tags, :carousels).where(query_string).distinct
+      left_joins(:category, :tags, :carousels).verified.where(query_string).distinct
     else
-      all
+      verified
     end
 
     result

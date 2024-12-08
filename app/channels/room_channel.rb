@@ -1,13 +1,13 @@
 class RoomChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "room_channel"
+    stream_from "room_#{params[:room_id]}"
+    Rails.logger.info "Subscribed to room #{params[:room_id]}"
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
   end
 
-  def speak(data)
-    ActionCable.server.broadcast "room_channel", message: data['message']
+  def start_quiz(data)
+    ActionCable.server.broadcast("room_#{data['room_id']}", { event: 'start_quiz' })
   end
 end

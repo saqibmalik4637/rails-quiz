@@ -1,6 +1,9 @@
 class CarouselService
   def self.create_category_carousels
+    CategoryCarousel.create(title: 'Newly Added', description: 'Collection of newly added categories')
+    CategoryCarousel.create(title: 'Top Collection', description: 'Collection of top categories')
     CategoryCarousel.create(title: 'Trending Categories', description: 'Collection of trending categories')
+    CategoryCarousel.create(title: 'For You', description: 'Collection of your favorite categories')
 
     category_ids = Category.all.pluck(:id)
     used_category_ids = []
@@ -8,7 +11,7 @@ class CarouselService
     CategoryCarousel.all.each do |carousel|
       items_count = 0
 
-      while items_count < 12
+      while items_count < 4
         category_id = category_ids.sample
         unless used_category_ids.include?(category_id)
           category = Category.find(category_id)

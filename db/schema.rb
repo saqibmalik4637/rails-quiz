@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_09_144133) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_08_093028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_09_144133) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "verified", default: false
     t.index ["quiz_id"], name: "index_questions_on_quiz_id"
   end
 
@@ -130,6 +131,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_09_144133) do
     t.bigint "shared_count", default: 0
     t.integer "total_points", default: 1000
     t.text "image_generation_prompt"
+    t.boolean "verified", default: false
     t.index ["category_id"], name: "index_quizzes_on_category_id"
   end
 

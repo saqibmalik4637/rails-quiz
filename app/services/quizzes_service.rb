@@ -8,6 +8,18 @@ class QuizzesService
     end
   end
 
+  def self.verify_selected_quizzes
+    beginner_tag = Tag.find_by(name: 'beginner')
+    intermediate_tag = Tag.find_by(name: 'intermediate')
+    advanced_tag = Tag.find_by(name: 'advanced')
+
+    Category.all.each_with_index do |category, index|
+      VerifyQuizJob.set(wait: index * 1.minute).perform_later(quiz_id: category.quizzes.joins(:tags).where(verified: false, tags: { name: [beginner_tag.name] }).first.id)
+      VerifyQuizJob.set(wait: (index + 1) * 1.minute).perform_later(quiz_id: category.quizzes.joins(:tags).where(verified: false, tags: { name: [intermediate_tag.name] }).first.id)
+      VerifyQuizJob.set(wait: (index + 2) * 1.minute).perform_later(quiz_id: category.quizzes.joins(:tags).where(verified: false, tags: { name: [advanced_tag.name] }).first.id)
+    end
+  end
+
   def self.attach_images
     Category.first.quizzes.each do |quiz|
       filename = quiz.name.downcase.gsub(" ", "-").gsub("\(", "").gsub("\)", "")

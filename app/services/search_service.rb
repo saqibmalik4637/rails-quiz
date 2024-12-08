@@ -16,7 +16,7 @@ class SearchService
   end
 
   def suggestions
-    quiz_names = Quiz.where((["LOWER(translate(name, '-_""\''', '')) LIKE ?"] * @keywords.size).join(' OR '), *@keywords.map{ |key| "%#{key}%" }).pluck(:name)
+    quiz_names = Quiz.verified.where((["LOWER(translate(name, '-_""\''', '')) LIKE ?"] * @keywords.size).join(' OR '), *@keywords.map{ |key| "%#{key}%" }).pluck(:name)
     sorted_quiz_names = sort_by_keywords(quiz_names)
 
     category_names = Category.where((["LOWER(translate(name, '-_""\''', '')) LIKE ?"] * @keywords.size).join(' OR '), *@keywords.map{ |key| "%#{key}%" }).pluck(:name)
