@@ -1,5 +1,5 @@
-class QuestionAndAnswerVerifyJob < ApplicationJob
-  retry_on OpenAI::RateLimitError, wait: 10.seconds, attempts: 3
+class Openai::QuestionAndAnswerVerifyJob < ApplicationJob
+  retry_on Openai::RateLimitError, wait: 10.seconds, attempts: 3
 
   def perform(question_id:)
     # Fetch question, options, and answer from the database
