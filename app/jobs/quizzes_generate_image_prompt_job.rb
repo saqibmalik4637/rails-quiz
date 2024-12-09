@@ -4,16 +4,16 @@ class QuizzesGenerateImagePromptJob < ApplicationJob
 
     quiz_names = category.quizzes.verified.map{ |quiz| { id: quiz.id, name: quiz.name } }
 
-    user_message = "I am making a quiz app, I have multiple categories and their respective quizzes\n"
-    user_message += "I need images for quizzes\n"
-    user_message += "I already generated images for categories from chatgpt using the prompt like ex: for math category 'Random math equations and symbols, white background, purple, orange, golden colors'\n"
-    user_message += "I want to generate images with chatgpt for quizzes\n"
-    user_message += "Can you please generate prompt for each quiz:\n"
+    user_message = "I am making a quiz app, and I need images for quizzes in various categories.\n"
+    user_message += "I already generated images for categories using prompts like:\n"
+    user_message += "'Random math equations and symbols, white background, purple, orange, golden colors.'\n"
+    user_message += "Now I want to generate image prompts for quizzes in a dreamy style, landscape aspect ratio.\n"
+    user_message += "Use different themes and colors for each quiz, like yellow or orange backgrounds.\n"
+    user_message += "Generate the prompts in the following JSON format, strictly without any additional text or explanation:\n"
+    user_message += "[{\"id\": 1, \"prompt\": \"prompt 1\"}, {\"id\": 2, \"prompt\": \"prompt 2\"}, ...]\n"
+    user_message += "Here are the quizzes:\n"
     user_message += quiz_names.to_json
-    user_message += "FYI: I need image in dreamy style in landscape aspect ratio\n"
-    user_message += "Use some different theme for quizzes like we can change some colors, we can use yellow colors as background or orange color in background\n"
-    user_message += "generate prompts like this: Dreamy time travel elements, clocks, hourglasses, and ancient artifacts, white background, yellow and orange accents, landscape aspect ratio in dreamy style\n"
-    user_message += "Please generate in json format and include provided quiz id like [{id: 1, prompt: 'prompt 1'}, {id: 2, prompt: 'prompt 2'}, ...]"
+
 
     messages = [
       {
@@ -32,7 +32,7 @@ class QuizzesGenerateImagePromptJob < ApplicationJob
 
     message_content = response["choices"][0]["message"]["content"]
 
-    prompts_array = JSON.parse(message_content.gsub("```", "").gsub("json", "").gsub("\\n", ""))
+    prompts_array = JSON.parse(message_content)
 
     prompts_array.each do |prompt_item|
       quiz = Quiz.find(prompt_item['id'])
