@@ -12,7 +12,7 @@ class CategoriesService
     Category.all.each do |category|
       next if category.id == 1
       QuizzesGenerateImagePromptJob.set(wait: wait_time).perform_later(category_id: category.id)
-      wait_time += 1.minutes
+      wait_time += 10.seconds
     end
   end
 end

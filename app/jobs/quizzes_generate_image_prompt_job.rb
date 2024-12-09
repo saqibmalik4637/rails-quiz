@@ -2,7 +2,7 @@ class QuizzesGenerateImagePromptJob < ApplicationJob
   def perform(category_id:)
     category = Category.find(category_id)
 
-    quiz_names = category.quizzes.map{ |quiz| { id: quiz.id, name: quiz.name } }
+    quiz_names = category.quizzes.verified.map{ |quiz| { id: quiz.id, name: quiz.name } }
 
     user_message = "I am making a quiz app, I have multiple categories and their respective quizzes\n"
     user_message += "I need images for quizzes\n"

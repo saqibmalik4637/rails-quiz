@@ -28,6 +28,6 @@ class Category < ApplicationRecord
   end
 
   def quizzes_count
-    quizzes.size
+    quizzes.verified.size
   end
 end
