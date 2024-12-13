@@ -50,7 +50,7 @@ class Quiz < ApplicationRecord
                 else
                   image.variant(resize_to_fill: [100, 100]) # Default size (original)
                 end
-      Rails.application.routes.url_helpers.rails_blob_url(variant)
+      Rails.application.routes.url_helpers.rails_blob_url(variant, only_path: false) + "?v=#{updated_at.to_i}"
     else
       "https://quizwithai.in#{ActionController::Base.helpers.asset_path('quizzes/quiz-placeholder.webp')}"
     end
