@@ -3,7 +3,6 @@ json.(
   :id,
   :name,
   :description,
-  :image_url,
   :total_points,
   :questions_count,
   :tags_json,
@@ -13,4 +12,5 @@ json.(
   :shared_count
 )
 
+json.image_url quiz.image_url(size: params[:image_size] || :default)
 json.is_favorited current_user.favorited_quizzes.include?(quiz)

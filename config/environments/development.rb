@@ -34,7 +34,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -70,4 +70,7 @@ Rails.application.configure do
   config.hosts << ".ngrok-free.app"
   # config.action_cable.url = "wss://golden-vast-mongoose.ngrok-free.app.ngrok.io/cable"
   # config.action_cable.allowed_request_origins = [ "http://localhost:19000", /https?:\/\/.*ngrok\.io/ ]
+  Rails.application.routes.default_url_options[:host] = 'golden-vast-mongoose.ngrok-free.app'
+  Rails.application.routes.default_url_options[:port] = '3000'
+  Rails.application.routes.default_url_options[:protocol] = 'https'
 end

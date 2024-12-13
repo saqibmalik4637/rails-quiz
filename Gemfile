@@ -86,3 +86,4 @@ gem 'faraday_curl'
 
 gem 'rack-cors', require: 'rack/cors'
 gem 'httparty'
+gem 'aws-sdk-s3', '~> 1'

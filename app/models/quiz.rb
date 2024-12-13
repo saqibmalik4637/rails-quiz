@@ -40,9 +40,17 @@ class Quiz < ApplicationRecord
   end
 
   # INSTANCE METHODS
-  def image_url
+  def image_url(size: :default)
     if image.attached?
-      image.url
+      variant = case size
+                when :thumbnail
+                  image.variant(resize_to_fill: [100, 100]) # Thumbnail version
+                when :medium
+                  image.variant(resize_to_limit: [600, 600]) # Medium-sized image
+                else
+                  image # Default size (original)
+                end
+      Rails.application.routes.url_helpers.rails_blob_url(variant)
     else
       [
         "https://quizwithai.in/#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel.png')}",
