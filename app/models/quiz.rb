@@ -52,10 +52,7 @@ class Quiz < ApplicationRecord
                 end
       Rails.application.routes.url_helpers.rails_blob_url(variant)
     else
-      [
-        "https://quizwithai.in/#{ActionController::Base.helpers.asset_path('quizzes/quiz-time-travel.png')}",
-        "https://quizwithai.in/#{ActionController::Base.helpers.asset_path('quizzes/time-travel-legends.png')}"
-      ].sample
+      "https://quizwithai.in/#{ActionController::Base.helpers.asset_path('quizzes/quiz-placeholder.webp')}"
     end
   end
 
