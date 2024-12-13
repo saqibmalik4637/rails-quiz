@@ -48,7 +48,7 @@ class Quiz < ApplicationRecord
                 when :medium
                   image.variant(resize_to_limit: [600, 600]) # Medium-sized image
                 else
-                  image # Default size (original)
+                  image.variant(resize_to_fill: [100, 100]) # Default size (original)
                 end
       Rails.application.routes.url_helpers.rails_blob_url(variant)
     else
