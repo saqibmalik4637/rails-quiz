@@ -330,6 +330,7 @@ DEPENDENCIES
   rails (~> 7.0.8)
   ransack
   redis (~> 4.0)
+  ruby-vips
   selenium-webdriver
   sprockets-rails
   stimulus-rails
