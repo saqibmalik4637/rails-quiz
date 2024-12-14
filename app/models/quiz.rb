@@ -1,3 +1,9 @@
+Quiz.all.each do |quiz|
+  if quiz.image.attached?
+    quiz.image.purge
+  end
+end
+
 class Quiz < ApplicationRecord
   #Associations
   belongs_to :category
@@ -48,7 +54,7 @@ class Quiz < ApplicationRecord
                 when :medium
                   image.variant(resize_to_limit: [600, 600]) # Medium-sized image
                 else
-                  image.variant(resize_to_fill: [100, 100]) # Default size (original)
+                  image # Default size (original)
                 end
       Rails.application.routes.url_helpers.rails_blob_url(variant, only_path: false) + "?v=#{updated_at.to_i}"
     else

@@ -12,5 +12,5 @@ json.(
   :shared_count
 )
 
-json.image_url quiz.image_url(size: params[:image_size] || :default)
+json.image_url quiz.image_url(size: params[:image_size] || :medium)
 json.is_favorited current_user.favorited_quizzes.include?(quiz)
