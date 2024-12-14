@@ -1,9 +1,3 @@
-Quiz.all.each do |quiz|
-  if quiz.image.attached?
-    quiz.image.purge
-  end
-end
-
 class Quiz < ApplicationRecord
   #Associations
   belongs_to :category
