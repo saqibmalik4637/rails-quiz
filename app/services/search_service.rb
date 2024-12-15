@@ -32,7 +32,7 @@ class SearchService
       result += Quiz.search(keyword)
     end
 
-    result
+    result.uniq
   end
 
   def categories
