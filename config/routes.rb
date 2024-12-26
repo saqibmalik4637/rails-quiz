@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         resources :quizzes, only: [:index]
       end
 
-      resources :quizzes, only: [:index] do
+      resources :quizzes, only: [:index, :show] do
         resources :questions, only: [:index]
 
         member do
