@@ -9,7 +9,7 @@ class Room < ApplicationRecord
   enum status: { is_open: 0, is_closed: 1 }
 
   def quiz_image
-    quiz.image_url
+    quiz.image_url(size: :medium)
   end
 
   def quiz_name

@@ -2,6 +2,7 @@ json.(
   category,
   :id,
   :name,
-  :image_url,
   :quizzes_count
 )
+
+json.image_url category.image_url(size: params[:image_size] || :medium)
