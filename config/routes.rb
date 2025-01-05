@@ -34,6 +34,9 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :interests, only: [:index]
+      resources :user_interests, only: [:create]
+
       post '/rooms/:joining_code/join', to: 'rooms#join', as: :join
 
       get '/search/suggestions/:query', to: 'search#suggestions', as: :suggestions

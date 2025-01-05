@@ -16,6 +16,9 @@ class User < ApplicationRecord
 
   has_many :report_cards, dependent: :destroy
 
+  has_many :user_interests, dependent: :destroy
+  has_many :interests, through: :user_interests
+
   def jwt_token
     payload = { user_id: id }
     token = JWT.encode payload, nil, 'none'

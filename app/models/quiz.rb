@@ -14,6 +14,8 @@ class Quiz < ApplicationRecord
   has_many :played_users, through: :user_plays, class_name: 'User', source: :user
   has_many :rooms, dependent: :destroy
   has_many :report_cards, dependent: :destroy
+  has_many :quiz_interests, dependent: :destroy
+  has_many :interests, through: :quiz_interests
 
   has_one_attached :image
 

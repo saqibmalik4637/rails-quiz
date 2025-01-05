@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_08_093028) do
+ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -77,6 +77,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_08_093028) do
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
+  create_table "interests", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "options", force: :cascade do |t|
     t.string "content"
     t.datetime "created_at", null: false
@@ -108,6 +114,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_08_093028) do
     t.datetime "updated_at", null: false
     t.boolean "verified", default: false
     t.index ["quiz_id"], name: "index_questions_on_quiz_id"
+  end
+
+  create_table "quiz_interests", force: :cascade do |t|
+    t.bigint "quiz_id"
+    t.bigint "interest_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interest_id"], name: "index_quiz_interests_on_interest_id"
+    t.index ["quiz_id"], name: "index_quiz_interests_on_quiz_id"
   end
 
   create_table "quiz_tags", force: :cascade do |t|
@@ -176,6 +191,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_08_093028) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_interests", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "interest_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["interest_id"], name: "index_user_interests_on_interest_id"
+    t.index ["user_id"], name: "index_user_interests_on_user_id"
   end
 
   create_table "user_quizzes", force: :cascade do |t|
