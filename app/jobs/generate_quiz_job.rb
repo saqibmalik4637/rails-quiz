@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class generateQuizJob < ApplicationJob
+class GenerateQuizJob < ApplicationJob
   def perform(quiz_id:)
     quiz = Quiz.find(quiz_id)
     prompt = "Dreamy, #{quiz.image_generation_prompt}"
