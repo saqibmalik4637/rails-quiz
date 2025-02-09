@@ -5,8 +5,6 @@ class Quiz < ApplicationRecord
   has_many :quiz_tags, dependent: :destroy
   has_many :tags, through: :quiz_tags
   has_many :questions, dependent: :nullify
-  has_many :carousel_items, as: :collectable, dependent: :destroy
-  has_many :carousels, through: :carousel_items
   has_many :user_quizzes
   has_many :user_favorites, -> { where is_favorited: true }, class_name: 'UserQuiz', foreign_key: :quiz_id
   has_many :favorited_users, through: :user_favorites, class_name: 'User', source: :user
@@ -28,8 +26,7 @@ class Quiz < ApplicationRecord
       query_string = "#{match_string_query('categories.name', query)} "
       query_string += "OR #{match_string_query('quizzes.name', query)} "
       query_string += "OR #{match_string_query('tags.name', query)} "
-      query_string += "OR #{match_string_query('carousels.title', query)}"
-      left_joins(:category, :tags, :carousels).verified.where(query_string).distinct
+      left_joins(:category, :tags).verified.where(query_string).distinct
     else
       verified
     end

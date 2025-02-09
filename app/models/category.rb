@@ -1,8 +1,6 @@
 class Category < ApplicationRecord
   #Associations
   has_many :quizzes, dependent: :destroy
-  has_many :carousel_items, as: :collectable, dependent: :destroy
-  has_many :carousels, through: :carousel_items
 
   # Attachments
   has_one_attached :image
@@ -13,8 +11,7 @@ class Category < ApplicationRecord
       query = query.downcase
       query_string = "LOWER(categories.name) LIKE '%#{query}%' "
       query_string += "OR LOWER(quizzes.name) LIKE '%#{query}%' "
-      query_string += "OR LOWER(carousels.title) LIKE '%#{query}%'"
-      left_joins(:quizzes, :carousels).where(query_string).distinct
+      left_joins(:quizzes).where(query_string).distinct
     else
       all
     end

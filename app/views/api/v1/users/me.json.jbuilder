@@ -1,1 +1,3 @@
-json.user @current_user
+json.user do
+  json.partial! 'api/v1/users/user', user: @current_user
+end

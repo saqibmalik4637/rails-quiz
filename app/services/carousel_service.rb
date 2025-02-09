@@ -1,46 +1,67 @@
 class CarouselService
   def self.create_category_carousels
-    CategoryCarousel.create(title: 'Newly Added', description: 'Collection of newly added categories')
-    CategoryCarousel.create(title: 'Top Collection', description: 'Collection of top categories')
-    CategoryCarousel.create(title: 'Trending Categories', description: 'Collection of trending categories')
-    CategoryCarousel.create(title: 'For You', description: 'Collection of your favorite categories')
-
-    category_ids = Category.all.pluck(:id)
-    used_category_ids = []
-
-    CategoryCarousel.all.each do |carousel|
-      items_count = 0
-
-      while items_count < 4
-        category_id = category_ids.sample
-        unless used_category_ids.include?(category_id)
-          category = Category.find(category_id)
-          CarouselItem.create(carousel: carousel, collectable: category, show_on_homepage: true)
-          used_category_ids << category_id
-          items_count += 1
-        end
-      end
+    [
+      {
+        "title": "Popular Categories",
+        "description": "Explore the most engaging categories in your region.",
+        "position": 2,
+        "classification": "trending"
+      },
+      {
+        "title": "Categories for You",
+        "description": "Find categories that match your hobbies and passions.",
+        "position": 4,
+        "classification": "personalized"
+      },
+      {
+        "title": "Explore New Topics",
+        "description": "Dive into fresh and exciting topics you haven’t explored yet.",
+        "position": 6,
+        "classification": "new_topics"
+      }
+    ].each do |data|
+      CategoryCarousel.create(
+        title: data[:title],
+        description: data[:description],
+        position: data[:position],
+        classification: data[:classification]
+      )
     end
   end
 
   def self.create_quiz_carousels
-    QuizCarousel.create(title: 'Trending Quizzes', description: 'Collection of trending quizzes')
-
-    quiz_ids = Quiz.all.pluck(:id)
-    used_quiz_ids = []
-
-    QuizCarousel.all.each do |carousel|
-      items_count = 0
-
-      while items_count < 12
-        quiz_id = quiz_ids.sample
-        unless used_quiz_ids.include?(quiz_id)
-          quiz = Quiz.find(quiz_id)
-          CarouselItem.create(carousel: carousel, collectable: quiz, show_on_homepage: true)
-          used_quiz_ids << quiz_id
-          items_count += 1
-        end
-      end
+    [
+      {
+        "title": "Trending Quizzes",
+        "description": "Discover the most popular quizzes in your region.",
+        "position": 1,
+        "classification": "trending"
+      },
+      {
+        "title": "Quizzes for Your Age Group",
+        "description": "Handpicked quizzes tailored to your age group.",
+        "position": 7,
+        "classification": "age_based"
+      },
+      {
+        "title": "Quizzes You Might Like",
+        "description": "Personalized quiz recommendations based on your interests.",
+        "position": 3,
+        "classification": "personalized"
+      },
+      {
+        "title": "Most Played Quizzes",
+        "description": "Join thousands of users in playing the most popular quizzes.",
+        "position": 5,
+        "classification": "most_played"
+      }
+    ].each do |data|
+      QuizCarousel.create(
+        title: data[:title],
+        description: data[:description],
+        position: data[:position],
+        classification: data[:classification]
+      )
     end
   end
 end

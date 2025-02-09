@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_09_130344) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,29 +42,24 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "carousel_items", force: :cascade do |t|
-    t.string "collectable_type"
-    t.bigint "collectable_id"
-    t.bigint "carousel_id"
-    t.boolean "show_on_homepage", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["carousel_id"], name: "index_carousel_items_on_carousel_id"
-    t.index ["collectable_type", "collectable_id"], name: "index_carousel_items_on_collectable"
-  end
-
   create_table "carousels", force: :cascade do |t|
     t.string "type"
     t.string "title"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position", default: 0, null: false
+    t.integer "classification"
   end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "preferred_countries", default: [], null: false
+    t.integer "preferred_min_age"
+    t.integer "preferred_max_age"
+    t.index ["preferred_countries"], name: "index_categories_on_preferred_countries", using: :gin
   end
 
   create_table "follows", force: :cascade do |t|
@@ -79,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
 
   create_table "interests", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "media", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -113,6 +116,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "verified", default: false
+    t.integer "preferred_max_age"
+    t.integer "preferred_min_age"
+    t.jsonb "preferred_countries", default: []
+    t.index ["preferred_countries"], name: "index_questions_on_preferred_countries", using: :gin
+    t.index ["preferred_max_age"], name: "index_questions_on_preferred_max_age"
+    t.index ["preferred_min_age"], name: "index_questions_on_preferred_min_age"
     t.index ["quiz_id"], name: "index_questions_on_quiz_id"
   end
 
@@ -122,6 +131,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["interest_id"], name: "index_quiz_interests_on_interest_id"
+    t.index ["quiz_id", "interest_id"], name: "index_quiz_interests_on_quiz_id_and_interest_id"
     t.index ["quiz_id"], name: "index_quiz_interests_on_quiz_id"
   end
 
@@ -147,7 +157,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
     t.integer "total_points", default: 1000
     t.text "image_generation_prompt"
     t.boolean "verified", default: false
+    t.jsonb "preferred_countries", default: [], null: false
+    t.integer "preferred_min_age"
+    t.integer "preferred_max_age"
     t.index ["category_id"], name: "index_quizzes_on_category_id"
+    t.index ["preferred_countries"], name: "index_quizzes_on_preferred_countries", using: :gin
+    t.index ["verified", "played_count"], name: "index_quizzes_on_verified_and_played_count"
   end
 
   create_table "report_cards", force: :cascade do |t|
@@ -161,6 +176,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_01_110258) do
     t.datetime "updated_at", null: false
     t.decimal "score"
     t.bigint "room_id"
+    t.index ["created_at"], name: "index_report_cards_on_created_at"
     t.index ["quiz_id"], name: "index_report_cards_on_quiz_id"
     t.index ["user_id"], name: "index_report_cards_on_user_id"
   end

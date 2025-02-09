@@ -14,7 +14,6 @@ class QuizzesGenerateImagePromptJob < ApplicationJob
     user_message += "Here are the quizzes:\n"
     user_message += quiz_names.to_json
 
-
     messages = [
       {
         role: "system",
@@ -26,13 +25,23 @@ class QuizzesGenerateImagePromptJob < ApplicationJob
       }
     ]
 
+    # chat_completion = Deepseek::ChatCompletions.new(messages: messages, model: 'deepseek-chat')
+
     chat_completion = Openai::ChatCompletions.new(messages: messages, model: 'gpt-4')
     chat_completion.request
     response = chat_completion.process
 
     message_content = response["choices"][0]["message"]["content"]
 
-    prompts_array = JSON.parse(message_content)
+    splitted_content = message_content.split("```")
+
+    if splitted_content.size > 1
+      code_part = splitted_content[1]
+    else
+      code_part = splitted_content[0]
+    end
+
+    prompts_array = JSON.parse(code_part)
 
     prompts_array.each do |prompt_item|
       quiz = Quiz.find(prompt_item['id'])

@@ -1,0 +1,10 @@
+json.(
+  user,
+  :id,
+  :fullname,
+  :email,
+  :age,
+  :username,
+  :country_code,
+  :has_interests
+)

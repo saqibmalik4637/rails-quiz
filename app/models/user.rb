@@ -38,4 +38,8 @@ class User < ApplicationRecord
   def following?(user)
     followees.include?(user)
   end
+
+  def has_interests
+    interests.present?
+  end
 end
