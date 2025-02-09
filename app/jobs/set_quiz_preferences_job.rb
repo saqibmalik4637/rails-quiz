@@ -68,6 +68,7 @@ class SetQuizPreferencesJob < ApplicationJob
     # Extract the JSON code block (content between triple backticks)
     splitted_content = message_content.split("```")
     code_part = splitted_content.size > 1 ? splitted_content[1] : splitted_content[0]
+    code_part = code_part.gsub('json', '')
     code_part.strip!
 
     # Parse the JSON response from the AI
