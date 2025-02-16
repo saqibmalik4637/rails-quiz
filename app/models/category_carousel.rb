@@ -2,7 +2,7 @@ class CategoryCarousel < Carousel
 
   # Trending: Categories with recent engagement
   def trending_content(user)
-    Category.joins(quizzes: :report_cards)
+    Category.with_attachment.joins(quizzes: :report_cards)
       .where('report_cards.created_at >= ?', 1.week.ago)
       .group('categories.id')
       .order('COUNT(report_cards.id) DESC')
@@ -11,7 +11,7 @@ class CategoryCarousel < Carousel
 
   # Personalized: Based on user interests
   def personalized_content(user)
-    Category.select('categories.*, RANDOM() AS ordering_key')
+    Category.with_attachment.select('categories.*, RANDOM() AS ordering_key')
       .joins(quizzes: :interests)
       .where(interests: { id: user.interest_ids })
       .group('categories.id')
@@ -20,7 +20,7 @@ class CategoryCarousel < Carousel
 
   # Age-based: Categories popular with user's age group
   def age_based_content(user)
-    Category.joins(quizzes: :report_cards)
+    Category.with_attachment.joins(quizzes: :report_cards)
       .where('categories.preferred_min_age <= ? AND categories.preferred_max_age >= ?', user.age, user.age)
       .group('categories.id')
       .order('COUNT(report_cards.id) DESC')
@@ -28,7 +28,7 @@ class CategoryCarousel < Carousel
 
   # Geographic: Popular categories in user's country
   def geographic_content(user)
-    Category.joins(quizzes: :report_cards)
+    Category.with_attachment.joins(quizzes: :report_cards)
       .where("categories.preferred_countries @> ?", [user.country_code].to_json)
       .group('categories.id')
       .order('COUNT(report_cards.id) DESC')
@@ -36,7 +36,7 @@ class CategoryCarousel < Carousel
 
   # Most Played: Categories with most played quizzes
   def most_played_content(user)
-    Category.joins(:quizzes)
+    Category.with_attachment.joins(:quizzes)
       .group('categories.id')
       .order('SUM(quizzes.played_count) DESC')
       .select('categories.*, SUM(quizzes.played_count) AS total_plays')
@@ -44,7 +44,7 @@ class CategoryCarousel < Carousel
 
   # New Topics: Categories with recent additions
   def new_topics_content(user)
-    Category.select('categories.*, MAX(quizzes.created_at) AS ordering_key')
+    Category.with_attachment.select('categories.*, MAX(quizzes.created_at) AS ordering_key')
       .joins(:quizzes)
       .where('quizzes.created_at >= ?', 2.weeks.ago)
       .group('categories.id')
@@ -53,6 +53,6 @@ class CategoryCarousel < Carousel
   end
 
   def random_content
-    Category.order("RANDOM()")
+    Category.with_attachment.order("RANDOM()")
   end
 end

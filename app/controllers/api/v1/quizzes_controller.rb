@@ -2,7 +2,7 @@ class Api::V1::QuizzesController < Api::V1::BaseController
   def index
     if params[:category_id].present?
       @category = Category.find(params[:category_id])
-      @quizzes = @category.quizzes.verified
+      @quizzes = @category.quizzes.with_attachment.verified
     elsif params[:carousel_id].present?
       @carousel = Carousel.find(params[:carousel_id])
       @carousel.homepage_items(user: current_user, limit: 100)
@@ -10,7 +10,7 @@ class Api::V1::QuizzesController < Api::V1::BaseController
       search_service = SearchService.new(query: params[:query])
       @quizzes = search_service.quizzes
     else
-      @quizzes = Quiz.verified
+      @quizzes = Quiz.with_attachment.verified
     end
   end
 

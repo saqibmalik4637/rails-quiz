@@ -15,9 +15,10 @@ class Quiz < ApplicationRecord
   has_many :quiz_interests, dependent: :destroy
   has_many :interests, through: :quiz_interests
 
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
 
   scope :verified, -> { where(verified: true) }
+  scope :with_attachment, -> { includes(image_attachment: :blob) }
 
   # CLASS METHODS
   def self.search(query)
@@ -26,9 +27,9 @@ class Quiz < ApplicationRecord
       query_string = "#{match_string_query('categories.name', query)} "
       query_string += "OR #{match_string_query('quizzes.name', query)} "
       query_string += "OR #{match_string_query('tags.name', query)} "
-      left_joins(:category, :tags).verified.where(query_string).distinct
+      with_attachment.left_joins(:category, :tags).verified.where(query_string).distinct
     else
-      verified
+      with_attachment.verified
     end
 
     result
@@ -56,7 +57,15 @@ class Quiz < ApplicationRecord
   end
 
   def questions_count
-    questions.size
+    if tags_string.downcase.include?("advanced")
+      10
+    elsif tags_string.downcase.include?("intermediate")
+      8
+    elsif tags_string.downcase.include?("beginner")
+      5
+    else
+      7
+    end
   end
 
   def tags_json

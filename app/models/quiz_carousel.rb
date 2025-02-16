@@ -2,7 +2,7 @@ class QuizCarousel < Carousel
 
   # Trending: Mix of popularity and recent engagement
   def trending_content(user)
-    content = Quiz.verified
+    content = Quiz.with_attachment.verified
       .joins(:report_cards)
       .where('report_cards.created_at >= ?', 1.week.ago)
       .where("quizzes.preferred_countries @> ? OR quizzes.preferred_countries = '[]'::jsonb", [user.country_code].to_json)
@@ -17,7 +17,7 @@ class QuizCarousel < Carousel
 
   # Personalized: Based on user interests and social connections
   def personalized_content(user)
-    content = Quiz.verified
+    content = Quiz.with_attachment.verified
       .select('quizzes.*, RANDOM() AS ordering_key')
       .joins(:interests)
       .where(interests: { id: user.interest_ids })
@@ -33,7 +33,7 @@ class QuizCarousel < Carousel
 
   # Age-based: Quizzes suitable for user's age group
   def age_based_content(user)
-    content = Quiz.verified
+    content = Quiz.with_attachment.verified
       .where('preferred_min_age <= ? AND preferred_max_age >= ?', user.age, user.age)
       .where("preferred_countries @> ? OR preferred_countries = '[]'::jsonb", [user.country_code].to_json)
       .order(played_count: :desc)
@@ -45,7 +45,7 @@ class QuizCarousel < Carousel
 
   # Geographic: Popular in user's country
   def geographic_content(user)
-    content = Quiz.verified
+    content = Quiz.with_attachment.verified
       .where("preferred_countries @> ? OR quizzes.preferred_countries = '[]'::jsonb", [user.country_code].to_json)
       .order(played_count: :desc)
 
@@ -56,7 +56,7 @@ class QuizCarousel < Carousel
 
   # Most Played: All-time favorites
   def most_played_content(user)
-    content = Quiz.verified
+    content = Quiz.with_attachment.verified
       .order(played_count: :desc)
 
     content = random_content unless content.present?
@@ -66,7 +66,7 @@ class QuizCarousel < Carousel
 
   # New Topics: Recently created and less explored
   def new_topics_content(user)
-    content = Quiz.verified
+    content = Quiz.with_attachment.verified
       .left_joins(:report_cards)
       .group('quizzes.id')
       .order('quizzes.created_at DESC, COUNT(report_cards.id) ASC')
@@ -78,6 +78,6 @@ class QuizCarousel < Carousel
   end
 
   def random_content
-    Quiz.verified.order("RANDOM()")
+    Quiz.with_attachment.verified.order("RANDOM()")
   end
 end

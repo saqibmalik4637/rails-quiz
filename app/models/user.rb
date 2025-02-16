@@ -42,4 +42,8 @@ class User < ApplicationRecord
   def has_interests
     interests.present?
   end
+
+  def played_question_ids
+    report_cards.map{|r|r.given_answers.map{|a|a["question"]["id"]}}.sum.uniq.sort rescue []
+  end
 end

@@ -3,7 +3,10 @@ class Category < ApplicationRecord
   has_many :quizzes, dependent: :destroy
 
   # Attachments
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
+
+  # Scopes
+  scope :with_attachment, -> { includes(image_attachment: :blob) }
 
   # CLASS METHODS
   def self.search(query)
@@ -11,9 +14,9 @@ class Category < ApplicationRecord
       query = query.downcase
       query_string = "LOWER(categories.name) LIKE '%#{query}%' "
       query_string += "OR LOWER(quizzes.name) LIKE '%#{query}%' "
-      left_joins(:quizzes).where(query_string).distinct
+      with_attachment.left_joins(:quizzes).where(query_string).distinct
     else
-      all
+      with_attachment.all
     end
 
     result
