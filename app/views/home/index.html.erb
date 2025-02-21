@@ -1,18 +1,58 @@
-<div>Test Page</div>
-<script>
-  window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"Chat with us"};
-  (function(d,t) {
-    var BASE_URL="http://0.0.0.0:3000";
-    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=BASE_URL+"/packs/js/sdk.js";
-    g.defer = true;
-    g.async = true;
-    s.parentNode.insertBefore(g,s);
-    g.onload=function(){
-      window.chatwootSDK.run({
-        websiteToken: 'SY7VczTKqydEhm2cw3HhuwoQ',
-        baseUrl: BASE_URL
-      })
-    }
-  })(document,"script");
-</script>
+<style lang="scss">
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+  th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+}
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Country Code</th>
+      <th>Interests</th>
+      <th>Played Quizzes</th>
+      <th>Report Cards</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each_with_index do |user, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= user.fullname %></td>
+        <td><%= user.email %></td>
+        <td><%= user.username %></td>
+        <td><%= user.country_code %></td>
+        <td>
+          <% if user.interests.any? %>
+            <%= user.interests.map(&:name).join(", ") %>
+          <% else %>
+            No Interests
+          <% end %>
+        </td>
+        <td><%= user.played_quizzes.size %></td>
+        <td><%= user.report_cards.size %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
